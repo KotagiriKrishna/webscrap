@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: web-scraper-cron
+spec:
+  schedule: "0 0 * * *" # Run daily at midnight
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: web-scraper
+            image: gcr.io/your-project-id/web-scraper:latest
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /app/credentials.json
+            volumeMounts:
+            - name: gcs-credentials
+              mountPath: /app/credentials.json
+              subPath: credentials.json
+          volumes:
+          - name: gcs-credentials
+            secret:
+              secretName: gcs-credentials-secret
+          restartPolicy: OnFailure
