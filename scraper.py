@@ -361,6 +361,7 @@ if __name__ == "__main__":
     print("retrying failed IDs")
     Main_dataset = generate_data(leftover_ids, Main_dataset)
 
+    bucket_name = "vidwan-data-bucket"
     output_file = "scraped_data.xlsx"
     Main_dataset.to_excel(output_file, index=False)
     upload_to_gcs(bucket_name, output_file, output_file)
