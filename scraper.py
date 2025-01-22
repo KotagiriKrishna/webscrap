@@ -326,7 +326,7 @@ def get_response(pid):
                 
     except Exception as e:
         print(f"Failed to scrape {url}: {e}")
-        return None
+        return 0
     
     
         
