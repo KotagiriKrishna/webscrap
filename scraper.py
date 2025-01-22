@@ -54,7 +54,7 @@ def Qualifications(soup , Scientists_Data):
                 else:
                     qual_data( 0 , 0 , 0)
             else:
-                    qual_data( 0 , 0 , 0)
+                qual_data( 0 , 0 , 0)
         except Exception as e:
             print("Exception occured ",e)
 
@@ -81,7 +81,7 @@ def Experience_information(soup , Scientists_Data):
                 else:
                     Exp_data_org(0 , 0 , 0)
             else:
-                    Exp_data_org(0 , 0 , 0)
+                Exp_data_org(0 , 0 , 0)
         except Exception as e:
             print("Exception occured ",e)
         
@@ -103,7 +103,7 @@ def Expertise_information(soup , Scientists_Data):
                 else:
                     Expertise_data( 0 , 0)
             else:
-                    Expertise_data( 0 , 0)
+                Expertise_data( 0 , 0)
         except Exception as e:
             print("Exception occured ",e)
 
@@ -124,7 +124,7 @@ def Present_information(soup , Scientists_Data ):
                 else:
                     Present_data([0,0,0])
             else:
-                    Present_data([0,0,0])
+                Present_data([0,0,0])
         except Exception as e:
             print("Exception occured ",e)
 
@@ -150,7 +150,7 @@ def Stats_information(soup , Scientists_Data):
                 else:
                     Stats_data([])
             else:
-                    Stats_data([]) 
+                Stats_data([]) 
         except Exception as e:
             print("Exception occured ",e)
 
@@ -175,7 +175,7 @@ def Honour_Awards(soup , Scientists_Data ):
                 else:
                     awards_data( 0 , 0 , 0)
             else:
-                    awards_data( 0 , 0 , 0)
+                awards_data( 0 , 0 , 0)
         except Exception as e:
             print("Exception occured ",e)
 
@@ -199,7 +199,7 @@ def Membership_prof(soup , Scientists_Data):
                 else:
                     mpb_data(0,0)
             else:
-                    mpb_data(0,0)
+                mpb_data(0,0)
         except Exception as e:
             print("Exception occured ",e)
 
@@ -225,7 +225,7 @@ def Membership_comm(soup , Scientists_Data):
                 else:
                     mcom_data(0,0,0)
             else:
-                    mcom_data(0,0,0)
+                mcom_data(0,0,0)
         except Exception as e:
             print("Exception occured ",e)
 
