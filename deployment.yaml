@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: web-scraper-cron
 spec:
-  schedule: "0 0 * * *" # Run daily at midnight
+  schedule: "0 * * * *" # Run daily at midnight
   jobTemplate:
     spec:
       template:
