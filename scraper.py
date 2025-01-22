@@ -315,7 +315,7 @@ def get_response(pid):
         if response.status_code == 200:
             soup = response.text
             if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-                return BeautifulSoup(response.text, "html.parser")
+                return BeautifulSoup(soup, "html.parser")
             else:
                 if pid not in leftover_ids:
                     leftover_ids.append(pid)
