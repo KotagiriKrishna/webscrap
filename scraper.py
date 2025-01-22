@@ -43,15 +43,18 @@ def Qualifications(soup , Scientists_Data):
         Scientists_Data["qual_inst"].append(inst if inst else "0")
 
     def qual_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            personal_section = soup.find('ul', id='qua-ul') 
-            if personal_section :
-                year = [h.get_text(strip=True) for h in personal_section.find_all("time")] 
-                qltn = [h.get_text(strip=True) for h in personal_section.find_all( "h2")] 
-                inst = [h.get_text(strip=True) for h in personal_section.find_all("p")] 
-                qual_data(year,qltn ,inst)
-            else:
-                qual_data( 0 , 0 , 0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                personal_section = soup.find('ul', id='qua-ul') 
+                if personal_section :
+                    year = [h.get_text(strip=True) for h in personal_section.find_all("time")] 
+                    qltn = [h.get_text(strip=True) for h in personal_section.find_all( "h2")] 
+                    inst = [h.get_text(strip=True) for h in personal_section.find_all("p")] 
+                    qual_data(year,qltn ,inst)
+                else:
+                    qual_data( 0 , 0 , 0)
+        except Exception as e:
+            print("Exception occured ",e)
 
     qual_ext(soup)
 
@@ -64,16 +67,19 @@ def Experience_information(soup , Scientists_Data):
 
     def extract_exp(soup):
         #print(soup)
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            experience = soup.find('div', id='list_panel_experience') 
-            if experience:
-                ex_yr = [h.get_text(strip=True) for h in experience.find_all("span")] 
-                ex_yr = [item.replace('\n', ' ').replace('                                                        ', '').strip() for item in ex_yr]
-                desig =[h.get_text(strip=True) for h in experience.find_all( "h2")] 
-                exp_inst =[h.get_text(strip=True) for h in experience.find_all(["p"])] 
-                Exp_data_org(ex_yr , desig , exp_inst)
-            else:
-                Exp_data_org(0 , 0 , 0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                experience = soup.find('div', id='list_panel_experience') 
+                if experience:
+                    ex_yr = [h.get_text(strip=True) for h in experience.find_all("span")] 
+                    ex_yr = [item.replace('\n', ' ').replace('                                                        ', '').strip() for item in ex_yr]
+                    desig =[h.get_text(strip=True) for h in experience.find_all( "h2")] 
+                    exp_inst =[h.get_text(strip=True) for h in experience.find_all(["p"])] 
+                    Exp_data_org(ex_yr , desig , exp_inst)
+                else:
+                    Exp_data_org(0 , 0 , 0)
+        except Exception as e:
+            print("Exception occured ",e)
         
     extract_exp(soup)
 
@@ -83,14 +89,17 @@ def Expertise_information(soup , Scientists_Data):
         Scientists_Data["interest"].append(interest if interest else "0")
 
     def Expertise_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            expertise_section = soup.find('div', id='expertise-view') 
-            if expertise_section: 
-                domain = [h.get_text(strip=True) for h in expertise_section.find_all("span")]
-                interest = [h.get_text(strip=True) for h in expertise_section.find_all("h5")] 
-                Expertise_data(domain,interest)
-            else:
-                Expertise_data( 0 , 0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                expertise_section = soup.find('div', id='expertise-view') 
+                if expertise_section: 
+                    domain = [h.get_text(strip=True) for h in expertise_section.find_all("span")]
+                    interest = [h.get_text(strip=True) for h in expertise_section.find_all("h5")] 
+                    Expertise_data(domain,interest)
+                else:
+                    Expertise_data( 0 , 0)
+        except Exception as e:
+            print("Exception occured ",e)
 
     Expertise_ext(soup)
 
@@ -100,13 +109,16 @@ def Present_information(soup , Scientists_Data ):
         Scientists_Data["present_inst"].append(pre_data[2] if pre_data[2] else "0")
 
     def Present_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            present_section = soup.find('div', class_='name-location') 
-            if present_section:
-                pre_data = [h.get_text(strip=True) for h in present_section.find_all("span")]
-                Present_data(pre_data)
-            else:
-                Present_data([0,0,0])
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                present_section = soup.find('div', class_='name-location') 
+                if present_section:
+                    pre_data = [h.get_text(strip=True) for h in present_section.find_all("span")]
+                    Present_data(pre_data)
+                else:
+                    Present_data([0,0,0])
+        except Exception as e:
+            print("Exception occured ",e)
 
     Present_ext(soup)
 
@@ -121,13 +133,16 @@ def Stats_information(soup , Scientists_Data):
                 Scientists_Data[k].append("0")
 
     def Stats_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            stats_section = soup.find('div', class_='service-block-v3 service-block-blue') 
-            if stats_section:
-                data = [h.get_text(strip=True) for h in stats_section.find_all("span") ]
-                Stats_data(data)
-            else:
-                Stats_data([]) 
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                stats_section = soup.find('div', class_='service-block-v3 service-block-blue') 
+                if stats_section:
+                    data = [h.get_text(strip=True) for h in stats_section.find_all("span") ]
+                    Stats_data(data)
+                else:
+                    Stats_data([]) 
+        except Exception as e:
+            print("Exception occured ",e)
 
     Stats_ext(soup)
 
@@ -139,15 +154,18 @@ def Honour_Awards(soup , Scientists_Data ):
         Scientists_Data["award_inst"].append(awdin if awdin else "0")
 
     def awards_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            awards_section =  soup.find('div', id='awards-form-view')
-            if awards_section: 
-                awardyr = [h.get_text(strip=True) for h in awards_section.find_all("span")]          #year
-                awd = [h.get_text(strip=True) for h in awards_section.find_all("h3")]    #award
-                awdin = [h.get_text(strip=True) for h in awards_section.find_all("p")]  #institute
-                awards_data(awardyr , awd , awdin)
-            else:
-                awards_data( 0 , 0 , 0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                awards_section =  soup.find('div', id='awards-form-view')
+                if awards_section: 
+                    awardyr = [h.get_text(strip=True) for h in awards_section.find_all("span")]          #year
+                    awd = [h.get_text(strip=True) for h in awards_section.find_all("h3")]    #award
+                    awdin = [h.get_text(strip=True) for h in awards_section.find_all("p")]  #institute
+                    awards_data(awardyr , awd , awdin)
+                else:
+                    awards_data( 0 , 0 , 0)
+        except Exception as e:
+            print("Exception occured ",e)
 
 
     awards_ext(soup)
@@ -159,14 +177,17 @@ def Membership_prof(soup , Scientists_Data):
         Scientists_Data["prof_validity"].append(prval if prval else "0")
 
     def memb_prof(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            memb_pro =  soup.find('div', id='pb-form-view')
-            if memb_pro: 
-                prb= [h.get_text(strip=True) for h in memb_pro.find_all("h3")] 
-                prval = [h.get_text(strip=True) for h in memb_pro.find_all("p")]
-                mpb_data(prb , prval)
-            else:
-                mpb_data(0,0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                memb_pro =  soup.find('div', id='pb-form-view')
+                if memb_pro: 
+                    prb= [h.get_text(strip=True) for h in memb_pro.find_all("h3")] 
+                    prval = [h.get_text(strip=True) for h in memb_pro.find_all("p")]
+                    mpb_data(prb , prval)
+                else:
+                    mpb_data(0,0)
+        except Exception as e:
+            print("Exception occured ",e)
 
     memb_prof(soup)
 
@@ -179,15 +200,18 @@ def Membership_comm(soup , Scientists_Data):
 
 
     def memb_com(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            committ =  soup.find('div', id='mc-form-view')
-            if committ: 
-                m_yr = [h.get_text(strip=True) for h in committ.find_all("span")] 
-                comm = [h.get_text(strip=True) for h in committ.find_all("h3")] 
-                m_val = [h.get_text(strip=True) for h in committ.find_all("p")] 
-                mcom_data(m_yr , comm , m_val)
-            else:
-                mcom_data(0,0,0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                committ =  soup.find('div', id='mc-form-view')
+                if committ: 
+                    m_yr = [h.get_text(strip=True) for h in committ.find_all("span")] 
+                    comm = [h.get_text(strip=True) for h in committ.find_all("h3")] 
+                    m_val = [h.get_text(strip=True) for h in committ.find_all("p")] 
+                    mcom_data(m_yr , comm , m_val)
+                else:
+                    mcom_data(0,0,0)
+        except Exception as e:
+            print("Exception occured ",e)
 
     memb_com(soup)
 
@@ -199,15 +223,18 @@ def Research_projects(soup , Scientists_Data ):
         Scientists_Data["Funding_Agency"].append(agency if agency else "0")
 
     def research_ext(soup):
-        if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
-            committ =  soup.find('div', id='rp-form-view')
-            committ1 =  soup.find('div', id='list-rp')
-            if committ: 
-                re_title = [h.get_text(strip=True) for h in committ.find_all("h2")] + ([h.get_text(strip=True) for h in committ1.find_all("h2")]) 
-                agency = [h.get_text(strip=True) for h in committ.find_all("b")] + ([h.get_text(strip=True) for h in committ1.find_all("h2")]) 
-                research_data(re_title , agency)
-            else:
-                research_data( 0 , 0)
+        try:
+            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
+                committ =  soup.find('div', id='rp-form-view')
+                committ1 =  soup.find('div', id='list-rp')
+                if committ: 
+                    re_title = [h.get_text(strip=True) for h in committ.find_all("h2")] + ([h.get_text(strip=True) for h in committ1.find_all("h2")]) 
+                    agency = [h.get_text(strip=True) for h in committ.find_all("b")] + ([h.get_text(strip=True) for h in committ1.find_all("h2")]) 
+                    research_data(re_title , agency)
+                else:
+                    research_data( 0 , 0)
+        except Exception as e:
+            print("Exception occured ",e)
     
     research_ext(soup)
 
