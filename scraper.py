@@ -311,7 +311,7 @@ def main(soup, eid):
 def get_response(pid):
     url =  "https://vidwan.inflibnet.ac.in/profile/" + str(pid)
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url)
         if response.status_code == 200:
             soup = response.text
             if "This Profile is not activated by the VIDWAN Administrator" not in str(soup):
