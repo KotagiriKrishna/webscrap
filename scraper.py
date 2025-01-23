@@ -371,18 +371,18 @@ def generate_data(leftover_ids, Main_dataset):
     Main_dataset = data_cleaning(Main_dataset)
     return Main_dataset
 
-def upload_to_gcs(bucket_name, source_file_name, Main_dataset):
+def upload_to_gcs(bucket_name, output_file, Main_dataset):
     client = storage.Client()
     vidwan_bucket = client.get_bucket(bucket_name)
     vidwan_bucket.blob(output_file).upload_from_string(Main_dataset.to_csv(),'text/csv')
 
-    print(f"File {source_file_name} uploaded.")
+    print(f"File {output_file} uploaded.")
   
    
 
 if __name__ == "__main__":
     start = 1
-    end = 100 #250335
+    end = 50 #250335
     Main_dataset =[]
     flag = False
 
