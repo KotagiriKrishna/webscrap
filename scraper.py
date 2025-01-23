@@ -405,8 +405,8 @@ if __name__ == "__main__":
 
     bucket_name = "vidwan-data-bucket"
     output_file = "Vidwan_Scientists_Dataset.csv"
-    
-    upload_to_gcs(bucket_name, output_file,Main_dataset )
+    Main_dataset.to_excel("vidwan_data.xlsx",index=False)
+    #upload_to_gcs(bucket_name, output_file,Main_dataset )
 
     print("file saved : ",output_file)
 

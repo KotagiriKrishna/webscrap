@@ -13,10 +13,10 @@ spec:
             image: gcr.io/vidwanscientistsdata/web-scraper:latest
             env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /app/vidwanscientistsdata-9f8473344db5.json
+              value: /vidwanscientistsdata-9f8473344db5.json
             volumeMounts:
             - name: gcs-credentials
-              mountPath: /app/vidwanscientistsdata-9f8473344db5.json
+              mountPath: /vidwanscientistsdata-9f8473344db5.json
               subPath: credentials.json
           volumes:
           - name: gcs-credentials
