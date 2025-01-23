@@ -11,7 +11,7 @@ spec:
           serviceAccountName: "614415855935-compute@developer.gserviceaccount.com"  # Kubernetes Service Account linked to GSA
           containers:
           - name: web-scraper
-            image: gcr.io/vidwanscientistsdata/data-scraper:latest  
+            image: gcr.io/vidwanscientistsdata/webscrap-app:v1  
             env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /vidwanscientistsdata-9f8473344db5.json  
