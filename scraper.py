@@ -320,32 +320,36 @@ def main(soup, eid):
     return None
 
 
-
-
-
-
-
+MAX_RETRIES = 3
+RETRY_DELAY = 10  # seconds
 
 def get_response(pid):
-    url =  "https://vidwan.inflibnet.ac.in/profile/" + str(pid)
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            soup = response.text
-            if "This Profile is not activated by the VIDWAN Administrator" not in str(soup) and soup:
-                return BeautifulSoup(soup, "html.parser")
-            else:
-                if pid not in leftover_ids:
-                    leftover_ids.append(pid)
+    url = "https://vidwan.inflibnet.ac.in/profile/" + str(pid)
+    retries = 0
+
+    while retries < MAX_RETRIES:
+        try:
+            response = requests.get(url, timeout=60)  # 1-minute timeout
+            if response.status_code == 200:
+                soup = response.text
+                if "This Profile is not activated by the VIDWAN Administrator" not in str(soup) and soup:
+                    return BeautifulSoup(soup, "html.parser")
+                else:
+                    if pid not in leftover_ids:
+                        leftover_ids.append(pid)
                     return 0
-                return 0
-        else:
-            raise Exception(f"Profile not accessible. Status code: {response.status_code}")
-                
-    except Exception as e:
-        print(f"Failed to scrape {url}: {e}")
-        return 0
-    
+            else:
+                raise Exception(f"Profile not accessible. Status code: {response.status_code}")
+        
+        except Exception as e:
+            print(f"Failed to scrape {url} on attempt {retries + 1}: {e}")
+            retries += 1
+            if retries < MAX_RETRIES:
+                print(f"Retrying in {RETRY_DELAY} seconds...")
+                time.sleep(RETRY_DELAY)  # Wait before retrying
+            else:
+                print(f"All retry attempts failed for {url}.")
+                return 0    
     
         
 def data_cleaning(Main_dataset):
@@ -353,13 +357,6 @@ def data_cleaning(Main_dataset):
     Main_dataset['name'] = Main_dataset['name'].str.replace(r'\b(\w)\s+(\w)\b', r'\1.\2.', regex=True)
     Main_dataset['name'] = Main_dataset['name'].str.replace(r'\.(\s+)', r'.', regex=True)
     Main_dataset['name'] = Main_dataset['name'].str.replace(r'\b([A-Z])\s+', r'\1.', regex=True)
-    #Main_dataset.to_excel('data/Vidwan_Scientists_Dataset.xlsx', index=False)
-    #DATA = pd.read_excel('data/Vidwan_Scientists_Dataset.xlsx')
-    #DATA = Main_dataset.fillna(0)
-    #Main_dataset = DATA.drop_duplicates()
-    #print(DATA)
-    #DATA.to_excel(output_file, index=False)
-
     return Main_dataset
 
         
@@ -374,18 +371,18 @@ def generate_data(leftover_ids, Main_dataset):
     Main_dataset = data_cleaning(Main_dataset)
     return Main_dataset
 
-def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
+def upload_to_gcs(bucket_name, source_file_name, Main_dataset):
     client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(source_file_name)
-    print(f"File {source_file_name} uploaded to {destination_blob_name}.")
+    vidwan_bucket = client.get_bucket(bucket_name)
+    vidwan_bucket.blob(output_file).upload_from_string(Main_dataset.to_csv(),'text/csv')
+
+    print(f"File {source_file_name} uploaded.")
   
    
 
 if __name__ == "__main__":
     start = 1
-    end = 250335
+    end = 100 #250335
     Main_dataset =[]
     flag = False
 
@@ -407,9 +404,9 @@ if __name__ == "__main__":
     Main_dataset = generate_data(leftover_ids, Main_dataset)
 
     bucket_name = "vidwan-data-bucket"
-    output_file = "scraped_data.xlsx"
-    Main_dataset.to_excel(output_file, index=False)
-    upload_to_gcs(bucket_name, output_file, output_file)
+    output_file = "Vidwan_Scientists_Dataset.csv"
+    
+    upload_to_gcs(bucket_name, output_file,Main_dataset )
 
     print("file saved : ",output_file)
 
