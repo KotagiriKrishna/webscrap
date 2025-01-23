@@ -382,7 +382,7 @@ def upload_to_gcs(bucket_name, output_file, Main_dataset):
 
 if __name__ == "__main__":
     start = 1
-    end = 50 #250335
+    end = 10 #250335
     Main_dataset =[]
     flag = False
 

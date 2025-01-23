@@ -8,18 +8,19 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: "614415855935-compute@developer.gserviceaccount.com"  # Kubernetes Service Account linked to GSA
           containers:
           - name: web-scraper
-            image: gcr.io/your-project-id/web-scraper:latest
+            image: gcr.io/vidwanscientistsdata/data-scraper:latest  
             env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /app/credentials.json
+              value: /vidwanscientistsdata-9f8473344db5.json  
             volumeMounts:
-            - name: gcs-credentials
-              mountPath: /app/credentials.json
-              subPath: credentials.json
+            - name: gcp-key
+              mountPath: / 
+              readOnly: true
           volumes:
-          - name: gcs-credentials
+          - name: gcp-key
             secret:
-              secretName: gcs-credentials-secret
+              secretName: gcp-key-secret
           restartPolicy: OnFailure
