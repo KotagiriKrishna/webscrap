@@ -401,15 +401,17 @@ if __name__ == "__main__":
 
     Main_dataset = data_cleaning(Main_dataset)
 
-    print("retrying failed IDs")
-    Main_dataset = generate_data(leftover_ids, Main_dataset)
+
 
     bucket_name = "vidwan-data-bucket"
     output_file = "Dataset"+str(start)+"-"+str(end)+".csv"
-    #Main_dataset.to_excel("../vidwan_data.xlsx",index=False)
     upload_to_gcs(bucket_name, output_file,Main_dataset )
-
     print("file saved at : ",output_file)
+
+    print("retrying failed IDs")
+    Main_dataset = generate_data(leftover_ids, Main_dataset)
+    upload_to_gcs(bucket_name, "MainDataset.csv",Main_dataset )
+    print("Retry ID's file saved at : ","MainDataset.csv")
 
 
 #print(DATA.head())
