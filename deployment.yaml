@@ -11,15 +11,5 @@ spec:
           containers:
           - name: web-scraper
             image: gcr.io/vidwanscientistsdata/web-scraper:latest
-            env:
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /vidwanscientistsdata-9f8473344db5.json
-            volumeMounts:
-            - name: gcs-credentials
-              mountPath: /vidwanscientistsdata-9f8473344db5.json
-              subPath: credentials.json
-          volumes:
-          - name: gcs-credentials
-            secret:
-              secretName: gcs-credentials-secret
-          restartPolicy: OnFailure
+
+
