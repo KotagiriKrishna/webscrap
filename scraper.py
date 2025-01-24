@@ -6,7 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup 
 from google.cloud import storage
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcs-key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/var/secrets/google/gcs-key.json"
 
 leftover_ids =[]
 
