@@ -6,6 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup 
 from google.cloud import storage
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcs-key.json"
 
 leftover_ids =[]
 
@@ -381,8 +382,8 @@ def upload_to_gcs(bucket_name, output_file, Main_dataset):
    
 
 if __name__ == "__main__":
-    start = 1
-    end = 10 #250335
+    start = 1 #60000
+    end =  20 #65000 #250335
     Main_dataset =[]
     flag = False
 
@@ -404,11 +405,11 @@ if __name__ == "__main__":
     Main_dataset = generate_data(leftover_ids, Main_dataset)
 
     bucket_name = "vidwan-data-bucket"
-    output_file = "Vidwan_Scientists_Dataset.csv"
-    Main_dataset.to_excel("vidwan_data.xlsx",index=False)
-    #upload_to_gcs(bucket_name, output_file,Main_dataset )
+    output_file = "Dataset"+str(start)+"-"+str(end)+".csv"
+    #Main_dataset.to_excel("../vidwan_data.xlsx",index=False)
+    upload_to_gcs(bucket_name, output_file,Main_dataset )
 
-    print("file saved : ",output_file)
+    print("file saved at : ",output_file)
 
 
 #print(DATA.head())
