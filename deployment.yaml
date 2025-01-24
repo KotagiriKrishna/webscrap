@@ -13,11 +13,11 @@ spec:
             image: gcr.io/vidwanscientistsdata/web-scraper:latest
             volumeMounts:
           - name: gcs-key
-            mountPath: /var/secrets/google
+            mountPath: /var
             readOnly: true
           env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: "/var/secrets/google/gcs-key.json"
+            value: "/var/gcs-key.json"
         volumes:
         - name: gcs-key
           secret:
