@@ -6,7 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup 
 from google.cloud import storage
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../var/gcs-key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcs-key.json"
 
 leftover_ids =[]
 
@@ -382,8 +382,8 @@ def upload_to_gcs(bucket_name, output_file, Main_dataset):
    
 
 if __name__ == "__main__":
-    start = 1 #60000
-    end =  20 #65000 #250335
+    start = 1
+    end =  250335
     Main_dataset =[]
     flag = False
 
